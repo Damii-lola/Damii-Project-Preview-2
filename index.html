@@ -1,0 +1,1720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>RemaWorld – HEIS Rema | Rave Lorde</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&family=Space+Grotesk:wght@300;400;500;600;700&family=Clash+Display:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+/* ============================================================
+   REMAWORLD – REDESIGNED
+   ============================================================ */
+:root {
+  --void: #030305;
+  --deep: #08080f;
+  --surface: #0f0f1a;
+  --panel: rgba(255,255,255,0.03);
+  --crimson: #c0392b;
+  --crimson-hot: #ff3d2e;
+  --ember: #e85d04;
+  --gold: #f0b429;
+  --gold-glow: rgba(240,180,41,0.15);
+  --neon: #39ff14;
+  --neon-soft: rgba(57,255,20,0.08);
+  --ice: #a8daff;
+  --cream: #f5f0e8;
+  --muted: #6b6b80;
+  --border: rgba(240,180,41,0.12);
+  --border-soft: rgba(255,255,255,0.06);
+  --glow-r: rgba(192,57,43,0.35);
+  --glow-g: rgba(240,180,41,0.25);
+  --r: 3px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;overflow-x:hidden;}
+body{
+  background:var(--void);
+  color:var(--cream);
+  font-family:'DM Sans',sans-serif;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* ──── CUSTOM CURSOR ──── */
+#cur{
+  position:fixed;width:10px;height:10px;
+  background:var(--gold);border-radius:50%;
+  pointer-events:none;z-index:99999;
+  transform:translate(-50%,-50%);
+  transition:width .15s,height .15s,background .2s;
+  mix-blend-mode:screen;
+}
+#cur-ring{
+  position:fixed;width:42px;height:42px;
+  border:1px solid rgba(240,180,41,0.5);
+  border-radius:50%;pointer-events:none;
+  z-index:99998;transform:translate(-50%,-50%);
+  transition:all .08s linear;
+}
+body.hovering #cur{width:24px;height:24px;background:var(--gold);}
+body.hovering #cur-ring{width:60px;height:60px;border-color:var(--crimson-hot);opacity:.7;}
+
+/* ──── SCROLLBAR ──── */
+::-webkit-scrollbar{width:2px;}
+::-webkit-scrollbar-track{background:var(--void);}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--crimson),var(--gold));border-radius:2px;}
+
+/* ──── LOADER ──── */
+#loader{
+  position:fixed;inset:0;background:var(--void);
+  z-index:999999;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:2rem;
+}
+#loader.out{animation:loaderOut .8s ease forwards;}
+@keyframes loaderOut{to{opacity:0;pointer-events:none;visibility:hidden;}}
+.load-logo{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(4rem,12vw,9rem);
+  letter-spacing:.15em;
+  background:linear-gradient(135deg,var(--crimson-hot),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:loadPulse 1.4s ease-in-out infinite;
+}
+@keyframes loadPulse{0%,100%{opacity:.2;transform:scale(.97);}50%{opacity:1;transform:scale(1);}}
+.load-track{
+  width:240px;height:1px;
+  background:rgba(255,255,255,.08);
+  overflow:hidden;position:relative;
+}
+.load-fill{
+  position:absolute;left:-100%;top:0;
+  width:100%;height:100%;
+  background:linear-gradient(90deg,var(--crimson),var(--gold),var(--neon));
+  animation:loadSlide 1.8s ease infinite;
+}
+@keyframes loadSlide{0%{left:-100%;}100%{left:100%;}}
+.load-txt{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:.65rem;letter-spacing:.4em;
+  text-transform:uppercase;color:var(--muted);
+}
+
+/* ──── NAV ──── */
+nav{
+  position:fixed;top:0;left:0;right:0;
+  z-index:1000;padding:1.4rem 4rem;
+  display:flex;align-items:center;justify-content:space-between;
+  background:linear-gradient(to bottom,rgba(3,3,5,.95),transparent);
+  transition:all .4s;
+}
+nav.s{
+  background:rgba(3,3,5,.97);
+  padding:1rem 4rem;
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(20px);
+}
+.nav-logo{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.9rem;letter-spacing:.12em;
+  text-decoration:none;
+  background:linear-gradient(to right,var(--gold),var(--ember));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.nav-logo em{-webkit-text-fill-color:var(--crimson-hot);}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-links a{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:.7rem;letter-spacing:.22em;
+  text-transform:uppercase;color:rgba(255,255,255,.45);
+  text-decoration:none;transition:color .2s;
+  position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;
+  bottom:-4px;left:0;width:0;height:1px;
+  background:var(--gold);transition:width .3s;
+}
+.nav-links a:hover{color:var(--gold);}
+.nav-links a:hover::after{width:100%;}
+.nav-play{
+  display:flex;align-items:center;gap:.5rem;
+  padding:.55rem 1.4rem;
+  background:linear-gradient(135deg,var(--crimson),var(--ember));
+  font-family:'Space Grotesk',sans-serif;
+  font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;
+  color:#fff;border:none;cursor:pointer;
+  clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%);
+  transition:all .25s;
+}
+.nav-play:hover{box-shadow:0 0 30px var(--glow-r);transform:translateY(-1px);}
+.ham{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;}
+.ham span{display:block;width:22px;height:1.5px;background:var(--gold);transition:all .3s;}
+
+/* ──── MOBILE MENU ──── */
+.mob-menu{
+  position:fixed;inset:0;background:rgba(3,3,5,.98);
+  z-index:998;display:none;flex-direction:column;
+  align-items:center;justify-content:center;gap:2.5rem;
+  backdrop-filter:blur(30px);
+}
+.mob-menu.on{display:flex;}
+.mob-menu a{
+  font-family:'Bebas Neue',sans-serif;font-size:3.5rem;
+  letter-spacing:.08em;color:rgba(255,255,255,.6);
+  text-decoration:none;transition:all .2s;
+}
+.mob-menu a:hover{color:var(--gold);letter-spacing:.14em;}
+.mob-x{
+  position:absolute;top:1.5rem;right:2rem;
+  font-size:2rem;background:none;border:none;
+  color:var(--cream);cursor:pointer;opacity:.5;transition:opacity .2s;
+}
+.mob-x:hover{opacity:1;}
+
+/* ──── SECTIONS ──── */
+section{position:relative;z-index:2;}
+.inner{max-width:1400px;margin:0 auto;}
+.sec-label{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:.62rem;letter-spacing:.45em;
+  text-transform:uppercase;color:var(--neon);
+  display:flex;align-items:center;gap:.8rem;margin-bottom:.6rem;
+}
+.sec-label::before{
+  content:'';display:block;width:20px;height:1px;background:var(--neon);
+}
+.sec-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(3.5rem,8vw,8rem);
+  letter-spacing:.02em;line-height:.9;
+}
+.gold{color:var(--gold);}
+.red{color:var(--crimson-hot);}
+
+/* ──── HERO ──── */
+#hero{
+  height:100vh;min-height:650px;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 80% 70% at 65% 45%,rgba(192,57,43,.25) 0%,transparent 65%),
+    radial-gradient(ellipse 50% 60% at 20% 80%,rgba(240,180,41,.07) 0%,transparent 55%),
+    radial-gradient(ellipse 60% 80% at 85% 20%,rgba(57,255,20,.04) 0%,transparent 50%),
+    var(--void);
+}
+/* Animated grid */
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(240,180,41,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(240,180,41,.03) 1px,transparent 1px);
+  background-size:80px 80px;
+  animation:gridDrift 25s linear infinite;
+}
+@keyframes gridDrift{0%{transform:translateY(0) translateX(0);}100%{transform:translateY(80px) translateX(0);}}
+
+/* Particle canvas */
+#particles{position:absolute;inset:0;pointer-events:none;}
+
+.hero-content{
+  position:relative;z-index:3;
+  text-align:center;padding:0 2rem;
+  max-width:1100px;
+}
+.hero-pill{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:.62rem;letter-spacing:.35em;text-transform:uppercase;
+  color:var(--neon);padding:.45rem 1.2rem;
+  border:1px solid rgba(57,255,20,.25);
+  background:rgba(57,255,20,.05);
+  margin-bottom:1.5rem;
+  opacity:0;animation:riseUp .7s .2s ease forwards;
+}
+.hero-pill::before{content:'✦';animation:spinSlow 4s linear infinite;}
+@keyframes spinSlow{to{transform:rotate(360deg);}}
+.hero-name{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(6rem,22vw,20rem);
+  letter-spacing:.02em;line-height:.85;
+  opacity:0;animation:riseUp .8s .4s ease forwards;
+}
+.hero-name .line1{
+  display:block;
+  background:linear-gradient(135deg,#fff 0%,rgba(255,255,255,.6) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero-name .line2{
+  display:block;
+  background:linear-gradient(135deg,var(--gold) 0%,var(--ember) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  text-shadow:none;
+}
+.hero-sub{
+  font-family:'DM Sans',sans-serif;
+  font-size:clamp(.9rem,2vw,1.1rem);
+  color:rgba(255,255,255,.4);letter-spacing:.06em;
+  margin-top:1.2rem;
+  opacity:0;animation:riseUp .7s .6s ease forwards;
+}
+.hero-cta{
+  margin-top:2.5rem;
+  display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;
+  opacity:0;animation:riseUp .7s .8s ease forwards;
+}
+.btn-fire{
+  display:inline-flex;align-items:center;gap:.7rem;
+  padding:1rem 2.4rem;
+  background:linear-gradient(135deg,var(--crimson),var(--ember));
+  color:#fff;font-family:'Space Grotesk',sans-serif;
+  font-size:.75rem;font-weight:600;letter-spacing:.18em;
+  text-transform:uppercase;border:none;cursor:pointer;
+  clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%);
+  transition:all .25s;text-decoration:none;
+  position:relative;overflow:hidden;
+}
+.btn-fire::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,transparent,rgba(255,255,255,.15),transparent);
+  transform:translateX(-100%);transition:transform .4s;
+}
+.btn-fire:hover::before{transform:translateX(100%);}
+.btn-fire:hover{box-shadow:0 8px 40px var(--glow-r);transform:translateY(-2px);}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:.7rem;
+  padding:1rem 2.4rem;
+  background:transparent;color:rgba(255,255,255,.7);
+  font-family:'Space Grotesk',sans-serif;
+  font-size:.75rem;font-weight:600;letter-spacing:.18em;
+  text-transform:uppercase;cursor:pointer;
+  border:1px solid rgba(255,255,255,.15);
+  clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%);
+  transition:all .25s;text-decoration:none;
+}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px);}
+.hero-scroll-hint{
+  position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
+  z-index:3;display:flex;flex-direction:column;align-items:center;gap:.6rem;
+  opacity:0;animation:riseUp .7s 1.2s ease forwards;
+}
+.hero-scroll-hint span{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:.55rem;letter-spacing:.35em;text-transform:uppercase;color:var(--muted);
+}
+.scroll-arrow{
+  width:1px;height:50px;
+  background:linear-gradient(var(--gold),transparent);
+  position:relative;
+  animation:arrowBounce 2s ease-in-out infinite;
+}
+@keyframes arrowBounce{0%,100%{height:40px;opacity:.4;}50%{height:65px;opacity:1;}}
+
+/* Floating stats */
+.hero-stat{
+  position:absolute;z-index:3;
+  font-family:'Space Grotesk',sans-serif;
+  opacity:0;
+}
+.hero-stat.on{animation:statIn .6s ease forwards;}
+@keyframes statIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+.hero-stat-val{
+  font-family:'Bebas Neue',sans-serif;font-size:2.2rem;
+  background:linear-gradient(135deg,var(--gold),var(--ember));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  line-height:1;
+}
+.hero-stat-lbl{
+  font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:.2rem;
+}
+.hs1{top:22%;right:7%;}
+.hs2{bottom:28%;left:4%;}
+.hs3{top:38%;left:2%;}
+
+@keyframes riseUp{from{opacity:0;transform:translateY(32px);}to{opacity:1;transform:translateY(0);}}
+
+/* ──── TICKER ──── */
+.ticker-wrap{
+  overflow:hidden;position:relative;z-index:5;
+  background:linear-gradient(135deg,var(--crimson) 0%,var(--ember) 100%);
+  padding:.6rem 0;border-top:1px solid rgba(255,255,255,.1);
+  border-bottom:1px solid rgba(255,255,255,.1);
+}
+.ticker-inner{display:flex;white-space:nowrap;animation:tick 30s linear infinite;}
+.ticker-inner span{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.05rem;letter-spacing:.18em;
+  color:#fff;padding:0 1.8rem;flex-shrink:0;
+}
+.ticker-inner span.dot{color:rgba(255,255,255,.35);}
+@keyframes tick{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+
+/* ──── BIO ──── */
+#bio{padding:10rem 4rem;}
+.bio-wrap{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:8rem;align-items:center;
+  max-width:1400px;margin:0 auto;
+}
+.bio-left{position:relative;}
+.bio-frame{
+  position:relative;
+  aspect-ratio:3/4;overflow:hidden;
+}
+.bio-frame::after{
+  content:'';position:absolute;
+  top:-12px;right:-12px;
+  width:100%;height:100%;
+  border:1px solid rgba(240,180,41,.3);
+  pointer-events:none;z-index:0;
+}
+.bio-frame-inner{
+  width:100%;height:100%;
+  background:linear-gradient(135deg,#1a0505 0%,#2d1505 40%,#050510 100%);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;z-index:1;overflow:hidden;
+}
+.bio-big-r{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:22rem;line-height:1;
+  color:rgba(240,180,41,.06);
+  position:absolute;
+  animation:bioPulse 6s ease-in-out infinite;
+}
+@keyframes bioPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
+.bio-frame-label{
+  position:absolute;bottom:1.5rem;left:1.5rem;
+  font-family:'Bebas Neue',sans-serif;font-size:.9rem;
+  letter-spacing:.25em;color:rgba(255,255,255,.3);
+  text-transform:uppercase;z-index:2;
+}
+.bio-red-accent{
+  position:absolute;top:0;left:0;
+  width:100%;height:4px;
+  background:linear-gradient(90deg,var(--crimson),var(--ember),transparent);
+  z-index:2;
+}
+.bio-stats-row{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:.8rem;margin-top:1.2rem;
+}
+.bio-stat{
+  padding:1rem 1.2rem;
+  background:rgba(255,255,255,.02);
+  border:1px solid var(--border-soft);
+  position:relative;overflow:hidden;
+  transition:all .3s;
+}
+.bio-stat::before{
+  content:'';position:absolute;
+  left:0;top:0;width:2px;height:0;
+  background:var(--gold);transition:height .4s;
+}
+.bio-stat:hover::before{height:100%;}
+.bio-stat:hover{border-color:var(--border);background:rgba(240,180,41,.03);}
+.bio-stat-n{
+  font-family:'Bebas Neue',sans-serif;font-size:2.2rem;
+  background:linear-gradient(135deg,var(--gold),var(--ember));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  line-height:1;
+}
+.bio-stat-l{font-size:.65rem;color:var(--muted);letter-spacing:.05em;margin-top:.2rem;}
+
+.bio-right{}
+.bio-right .sec-title{margin-bottom:2.5rem;}
+.bio-p{
+  font-size:.98rem;line-height:1.9;
+  color:rgba(255,255,255,.5);margin-bottom:1.4rem;
+}
+.bio-p strong{color:rgba(255,255,255,.85);font-weight:500;}
+.bio-p em{color:var(--gold);font-style:normal;}
+.tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:2.2rem;}
+.tag{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;
+  padding:.35rem .75rem;
+  border:1px solid rgba(240,180,41,.2);
+  color:rgba(240,180,41,.7);
+  background:rgba(240,180,41,.04);
+  transition:all .2s;
+}
+.tag:hover{background:rgba(240,180,41,.12);border-color:var(--gold);color:var(--gold);}
+
+/* ──── QUOTE ──── */
+.quote-band{
+  padding:5rem 4rem;
+  background:
+    radial-gradient(ellipse 80% 100% at 50% 50%,rgba(192,57,43,.08) 0%,transparent 70%),
+    var(--deep);
+  text-align:center;position:relative;overflow:hidden;
+  border-top:1px solid var(--border-soft);
+  border-bottom:1px solid var(--border-soft);
+}
+.quote-bg-text{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-family:'Bebas Neue',sans-serif;font-size:clamp(8rem,25vw,20rem);
+  color:rgba(255,255,255,.015);white-space:nowrap;pointer-events:none;letter-spacing:.1em;
+}
+.quote-text{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(1.8rem,4.5vw,4rem);
+  letter-spacing:.04em;line-height:1.2;
+  max-width:900px;margin:0 auto;
+  color:rgba(255,255,255,.85);position:relative;z-index:1;
+}
+.quote-text span{color:var(--gold);}
+.quote-attr{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--muted);margin-top:1.5rem;position:relative;z-index:1;
+}
+
+/* ──── MUSIC PLAYER ──── */
+#music{
+  padding:10rem 4rem;
+  background:radial-gradient(ellipse at 50% 0%,rgba(192,57,43,.08) 0%,transparent 60%);
+}
+.music-inner{max-width:1400px;margin:0 auto;}
+.music-head{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  margin-bottom:5rem;flex-wrap:wrap;gap:2rem;
+}
+.music-grid{
+  display:grid;grid-template-columns:1fr 1.3fr;
+  gap:3rem;align-items:start;
+}
+/* Tracklist */
+.tracklist{border:1px solid var(--border-soft);}
+.track{
+  display:flex;align-items:center;gap:1rem;
+  padding:.9rem 1.2rem;
+  border-bottom:1px solid rgba(255,255,255,.04);
+  cursor:pointer;transition:all .2s;position:relative;overflow:hidden;
+}
+.track::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(240,180,41,.06),transparent);
+  transform:translateX(-100%);transition:transform .3s;pointer-events:none;
+}
+.track:hover::after,.track.on::after{transform:translateX(0);}
+.track.on{border-bottom-color:rgba(240,180,41,.15);}
+.t-num{
+  font-family:'Bebas Neue',sans-serif;font-size:1.1rem;
+  color:rgba(255,255,255,.15);width:24px;text-align:center;
+  flex-shrink:0;transition:color .2s;
+}
+.track.on .t-num{color:var(--gold);}
+.t-thumb{
+  width:40px;height:40px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;font-size:.9rem;
+  color:rgba(240,180,41,.4);
+  border:1px solid rgba(255,255,255,.06);
+}
+.t-info{flex:1;min-width:0;}
+.t-name{
+  font-weight:500;font-size:.88rem;color:rgba(255,255,255,.8);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  transition:color .2s;
+}
+.track.on .t-name,.track:hover .t-name{color:var(--gold);}
+.t-album{font-size:.68rem;color:var(--muted);margin-top:.1rem;}
+.t-dur{
+  font-family:'Space Grotesk',sans-serif;font-size:.62rem;
+  color:var(--muted);flex-shrink:0;
+}
+.eq{display:none;align-items:flex-end;gap:2px;height:14px;flex-shrink:0;}
+.track.on .eq{display:flex;}
+.eq-b{
+  width:3px;background:var(--gold);
+  animation:eq .7s ease-in-out infinite alternate;
+}
+.eq-b:nth-child(1){height:4px;animation-delay:0s;}
+.eq-b:nth-child(2){height:10px;animation-delay:.2s;}
+.eq-b:nth-child(3){height:6px;animation-delay:.4s;}
+@keyframes eq{from{transform:scaleY(.3);}to{transform:scaleY(1);}}
+
+/* Player card */
+.player-card{
+  position:sticky;top:7rem;
+  background:rgba(255,255,255,.025);
+  border:1px solid var(--border-soft);
+  overflow:hidden;
+}
+.player-art{
+  width:100%;aspect-ratio:1;
+  background:linear-gradient(135deg,#1a0505,#2d1a0a,#050510);
+  position:relative;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.player-art::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 50%,rgba(192,57,43,.15),transparent 70%);
+  animation:artGlow 4s ease-in-out infinite;
+}
+@keyframes artGlow{0%,100%{opacity:.4;}50%{opacity:1;}}
+.vinyl{
+  width:72%;height:72%;border-radius:50%;
+  background:repeating-radial-gradient(circle at 50%,#0d0d0d 0px,#1a1a1a 3px,#0d0d0d 4px);
+  position:relative;
+  animation:vspin 5s linear infinite;animation-play-state:paused;
+  box-shadow:0 0 0 1px rgba(255,255,255,.05),0 0 40px rgba(0,0,0,.8);
+}
+.vinyl.spin{animation-play-state:running;}
+@keyframes vspin{to{transform:rotate(360deg);}}
+.vinyl::after{
+  content:'';position:absolute;top:50%;left:50%;
+  width:18%;height:18%;border-radius:50%;
+  background:radial-gradient(var(--gold),var(--ember));
+  transform:translate(-50%,-50%);
+}
+.vinyl-label{
+  position:absolute;top:50%;left:50%;
+  width:24%;height:24%;border-radius:50%;
+  background:linear-gradient(135deg,#111,#222);
+  transform:translate(-50%,-50%);z-index:1;
+  display:flex;align-items:center;justify-content:center;
+}
+.vinyl-label span{
+  font-family:'Bebas Neue',sans-serif;font-size:.55rem;
+  letter-spacing:.1em;color:rgba(255,255,255,.4);
+}
+.art-text{
+  position:absolute;font-family:'Bebas Neue',sans-serif;
+  font-size:6rem;color:rgba(240,180,41,.06);z-index:0;letter-spacing:.1em;
+}
+.player-body{padding:2rem;}
+.player-track{margin-bottom:1.6rem;}
+.player-title{
+  font-family:'Bebas Neue',sans-serif;font-size:2rem;
+  letter-spacing:.05em;line-height:1;color:var(--cream);
+}
+.player-sub{font-size:.72rem;color:var(--muted);margin-top:.3rem;letter-spacing:.05em;}
+.prog-wrap{margin-bottom:1.5rem;}
+.prog-bar{
+  width:100%;height:2px;background:rgba(255,255,255,.08);
+  position:relative;cursor:pointer;margin-bottom:.5rem;
+}
+.prog-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--crimson),var(--gold));
+  width:0%;transition:width .4s linear;position:relative;
+}
+.prog-fill::after{
+  content:'';position:absolute;right:-6px;top:-5px;
+  width:12px;height:12px;border-radius:50%;
+  background:var(--gold);box-shadow:0 0 10px var(--gold);
+}
+.prog-times{
+  display:flex;justify-content:space-between;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:.58rem;color:var(--muted);
+}
+.ctrl{display:flex;align-items:center;justify-content:center;gap:1.2rem;}
+.c-btn{
+  background:none;border:none;cursor:pointer;
+  color:rgba(255,255,255,.35);font-size:1.1rem;
+  width:36px;height:36px;display:flex;align-items:center;justify-content:center;
+  transition:color .2s,transform .15s;
+}
+.c-btn:hover{color:rgba(255,255,255,.8);transform:scale(1.1);}
+.c-play{
+  width:54px;height:54px;
+  background:linear-gradient(135deg,var(--crimson),var(--ember));
+  border-radius:50%;color:#fff;font-size:1.3rem;
+  box-shadow:0 0 0 0 rgba(192,57,43,.4);
+}
+.c-play:hover{
+  box-shadow:0 0 30px var(--glow-r);
+  transform:scale(1.08)!important;
+}
+.c-play.pulsing{animation:playPulse 1.5s ease-in-out infinite;}
+@keyframes playPulse{0%,100%{box-shadow:0 0 0 0 rgba(192,57,43,.4);}50%{box-shadow:0 0 0 12px rgba(192,57,43,0);}}
+.player-note{
+  margin-top:1.5rem;
+  padding:.7rem 1rem;
+  background:rgba(57,255,20,.04);
+  border:1px solid rgba(57,255,20,.1);
+  font-family:'Space Grotesk',sans-serif;
+  font-size:.6rem;color:var(--neon);letter-spacing:.05em;line-height:1.6;
+}
+
+/* ──── WAVEFORM ──── */
+.wave{display:flex;gap:3px;align-items:center;height:28px;opacity:.3;}
+.wave-b{
+  width:3px;background:var(--gold);border-radius:2px;
+  animation:wv 1s ease-in-out infinite alternate;
+}
+.wave-b:nth-child(odd){animation-duration:.8s;}
+.wave-b:nth-child(3n){animation-duration:1.3s;}
+@keyframes wv{from{height:2px;}to{height:26px;}}
+.wave.active{opacity:1;}
+
+/* ──── DISCOGRAPHY ──── */
+#discography{padding:10rem 4rem;max-width:1400px;margin:0 auto;}
+.disco-header{margin-bottom:4rem;}
+.disco-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+  gap:1.2rem;
+}
+.disco-card{cursor:pointer;position:relative;}
+.disco-art{
+  width:100%;aspect-ratio:1;
+  position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:.7rem;
+}
+.disco-art-txt{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:3.5rem;letter-spacing:.05em;
+  color:rgba(240,180,41,.18);text-align:center;
+  transition:transform .4s;
+}
+.disco-card:hover .disco-art-txt{transform:scale(.9);}
+.disco-hover{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(192,57,43,.85),rgba(192,57,43,.3),transparent);
+  opacity:0;transition:opacity .3s;
+  display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;
+  padding:1rem;
+}
+.disco-card:hover .disco-hover{opacity:1;}
+.disco-hover-tracks{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(255,255,255,.7);line-height:1.6;
+}
+.disco-title{font-weight:600;font-size:.88rem;color:rgba(255,255,255,.85);}
+.disco-meta{font-size:.68rem;color:var(--muted);margin-top:.15rem;}
+.disco-badge{
+  display:inline-block;margin-top:.35rem;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;
+  padding:.2rem .5rem;
+}
+.b-alb{background:rgba(192,57,43,.15);color:var(--crimson-hot);border:1px solid rgba(192,57,43,.25);}
+.b-ep{background:rgba(240,180,41,.08);color:var(--gold);border:1px solid rgba(240,180,41,.2);}
+.b-sng{background:rgba(57,255,20,.06);color:var(--neon);border:1px solid rgba(57,255,20,.15);}
+
+/* ──── GALLERY ──── */
+#gallery{
+  padding:10rem 4rem;
+  background:radial-gradient(ellipse at 100% 60%,rgba(240,180,41,.04) 0%,transparent 50%);
+}
+.gallery-inner{max-width:1400px;margin:0 auto;}
+.gal-head{margin-bottom:2rem;}
+.gal-filters{
+  display:flex;gap:.8rem;margin-bottom:2.5rem;flex-wrap:wrap;
+}
+.gal-btn{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;
+  padding:.5rem 1.1rem;background:transparent;
+  border:1px solid rgba(255,255,255,.1);
+  color:var(--muted);cursor:pointer;transition:all .2s;
+}
+.gal-btn.on,.gal-btn:hover{
+  border-color:var(--gold);color:var(--gold);
+  background:rgba(240,180,41,.06);
+}
+.gal-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:.7rem;
+}
+.gal-item{
+  position:relative;overflow:hidden;cursor:pointer;
+  background:#0f0f1a;transition:transform .3s;
+}
+.gal-item:hover{transform:scale(.98);}
+.gal-item.tall{aspect-ratio:.65;grid-row:span 2;}
+.gal-item.wide{grid-column:span 2;aspect-ratio:2;}
+.gal-item.sq{aspect-ratio:1;}
+.gal-placeholder{
+  width:100%;height:100%;min-height:160px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:3rem;letter-spacing:.1em;
+  color:rgba(255,255,255,.07);
+  transition:transform .4s;
+}
+.gal-item:hover .gal-placeholder{transform:scale(1.05);}
+.gal-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(3,3,5,.95) 0%,transparent 55%);
+  opacity:0;transition:opacity .3s;
+  display:flex;align-items:flex-end;padding:1rem;
+}
+.gal-item:hover .gal-overlay{opacity:1;}
+.gal-cap{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(255,255,255,.7);line-height:1.4;
+}
+
+/* ──── LIGHTBOX ──── */
+#lightbox{
+  position:fixed;inset:0;background:rgba(0,0,0,.96);
+  z-index:9000;display:none;align-items:center;justify-content:center;
+  backdrop-filter:blur(20px);
+}
+#lightbox.on{display:flex;}
+.lb-inner{position:relative;text-align:center;padding:2rem;}
+.lb-close{
+  position:absolute;top:-30px;right:0;
+  font-size:1.8rem;background:none;border:none;
+  color:rgba(255,255,255,.5);cursor:pointer;transition:color .2s;
+}
+.lb-close:hover{color:var(--gold);}
+.lb-art{
+  min-width:400px;min-height:300px;max-width:80vw;max-height:75vh;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;font-size:8rem;
+  color:rgba(240,180,41,.15);
+}
+.lb-cap{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;
+  color:var(--muted);margin-top:1rem;
+}
+
+/* ──── MERCH ──── */
+#merch{padding:10rem 4rem;max-width:1400px;margin:0 auto;}
+.merch-head{margin-bottom:4rem;}
+.merch-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:1.2rem;
+}
+.merch-card{
+  border:1px solid var(--border-soft);
+  background:rgba(255,255,255,.015);
+  overflow:hidden;transition:all .3s;position:relative;
+}
+.merch-card:hover{
+  border-color:rgba(240,180,41,.3);
+  transform:translateY(-5px);
+  box-shadow:0 25px 60px rgba(0,0,0,.5),0 0 0 1px rgba(240,180,41,.1);
+}
+.m-badge{
+  position:absolute;top:.8rem;left:.8rem;z-index:2;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;
+  padding:.25rem .6rem;background:var(--crimson);color:#fff;
+}
+.m-img{
+  width:100%;aspect-ratio:1;
+  background:linear-gradient(135deg,#111,#1a1a1a);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;
+  position:relative;overflow:hidden;transition:all .3s;
+}
+.merch-card:hover .m-img{background:linear-gradient(135deg,#1a0a05,#2d1a0a);}
+.m-icon{font-size:5rem;line-height:1;filter:grayscale(.3);transition:transform .3s;}
+.merch-card:hover .m-icon{transform:scale(1.1);}
+.m-type{
+  font-family:'Space Grotesk',sans-serif;font-size:.55rem;
+  letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.2);
+}
+.m-info{padding:1.2rem;}
+.m-name{font-weight:600;font-size:.92rem;color:rgba(255,255,255,.85);margin-bottom:.3rem;}
+.m-desc{font-size:.72rem;color:var(--muted);line-height:1.55;margin-bottom:1rem;}
+.m-foot{display:flex;align-items:center;justify-content:space-between;}
+.m-price{
+  font-family:'Bebas Neue',sans-serif;font-size:1.6rem;
+  background:linear-gradient(135deg,var(--gold),var(--ember));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.m-btn{
+  font-family:'Space Grotesk',sans-serif;font-size:.58rem;
+  letter-spacing:.15em;text-transform:uppercase;
+  padding:.5rem 1rem;background:transparent;
+  border:1px solid rgba(240,180,41,.4);color:rgba(240,180,41,.7);
+  cursor:pointer;transition:all .2s;text-decoration:none;display:inline-block;
+}
+.m-btn:hover{background:var(--gold);color:var(--void);border-color:var(--gold);}
+
+/* ──── TOUR ──── */
+#tour{
+  padding:10rem 4rem;
+  background:linear-gradient(to bottom,transparent,rgba(192,57,43,.05),transparent);
+  border-top:1px solid var(--border-soft);
+  border-bottom:1px solid var(--border-soft);
+}
+.tour-inner{max-width:1400px;margin:0 auto;}
+.tour-head{margin-bottom:4rem;}
+.tour-list{border:1px solid var(--border-soft);}
+.tour-item{
+  display:grid;grid-template-columns:110px 1fr auto auto;
+  gap:2.5rem;align-items:center;
+  padding:1.4rem 2rem;
+  border-bottom:1px solid rgba(255,255,255,.04);
+  transition:all .25s;position:relative;overflow:hidden;
+  cursor:default;
+}
+.tour-item::before{
+  content:'';position:absolute;left:0;top:0;
+  width:0;height:100%;
+  background:rgba(240,180,41,.03);transition:width .4s;
+}
+.tour-item:hover::before{width:100%;}
+.tour-item:hover{border-bottom-color:rgba(240,180,41,.1);}
+.t-date{
+  font-family:'Bebas Neue',sans-serif;font-size:1.5rem;
+  color:var(--gold);line-height:1;
+}
+.t-day{
+  font-family:'Space Grotesk',sans-serif;font-size:.55rem;
+  letter-spacing:.15em;text-transform:uppercase;color:var(--muted);
+}
+.t-city{font-weight:600;font-size:1.05rem;color:rgba(255,255,255,.85);}
+.t-venue{font-size:.75rem;color:var(--muted);margin-top:.15rem;}
+.t-special{
+  display:inline-block;margin-left:.5rem;
+  font-family:'Space Grotesk',sans-serif;font-size:.48rem;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:.18rem .5rem;
+  background:rgba(57,255,20,.08);border:1px solid rgba(57,255,20,.2);color:var(--neon);
+}
+.t-flag{font-size:1.6rem;}
+.t-tix{
+  font-family:'Space Grotesk',sans-serif;font-size:.6rem;
+  letter-spacing:.15em;text-transform:uppercase;
+  padding:.55rem 1.3rem;background:transparent;
+  border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.55);
+  cursor:pointer;transition:all .2s;text-decoration:none;white-space:nowrap;
+}
+.t-tix:hover{border-color:var(--gold);color:var(--gold);}
+.t-tix.sold{
+  border-color:rgba(255,255,255,.07);color:var(--muted);cursor:not-allowed;
+}
+.t-tix.sold:hover{border-color:rgba(255,255,255,.07);color:var(--muted);}
+
+/* ──── FOOTER ──── */
+footer{
+  padding:7rem 4rem 3rem;
+  border-top:1px solid var(--border-soft);
+  position:relative;z-index:2;
+}
+.footer-inner{max-width:1400px;margin:0 auto;}
+.footer-grid{
+  display:grid;grid-template-columns:2fr 1fr 1fr;
+  gap:5rem;margin-bottom:5rem;
+}
+.f-logo{
+  font-family:'Bebas Neue',sans-serif;font-size:3.5rem;
+  letter-spacing:.08em;line-height:1;margin-bottom:1rem;
+  background:linear-gradient(135deg,var(--gold),var(--ember));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.f-logo em{-webkit-text-fill-color:var(--crimson-hot);}
+.f-tag{font-size:.85rem;color:rgba(255,255,255,.35);line-height:1.7;max-width:300px;}
+.f-socials{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:2rem;}
+.f-soc{
+  display:flex;align-items:center;gap:.4rem;
+  font-family:'Space Grotesk',sans-serif;font-size:.6rem;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;
+  padding:.45rem .8rem;border:1px solid rgba(255,255,255,.07);
+  transition:all .2s;
+}
+.f-soc:hover{color:var(--gold);border-color:rgba(240,180,41,.25);background:rgba(240,180,41,.04);}
+.f-col h4{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;
+  color:rgba(240,180,41,.6);margin-bottom:1.5rem;
+}
+.f-col ul{list-style:none;}
+.f-col ul li{margin-bottom:.8rem;}
+.f-col ul a{
+  font-size:.82rem;color:rgba(255,255,255,.35);
+  text-decoration:none;transition:color .2s;
+}
+.f-col ul a:hover{color:rgba(255,255,255,.75);}
+.footer-bottom{
+  padding-top:2rem;border-top:1px solid rgba(255,255,255,.04);
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:1rem;
+}
+.footer-bottom p{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:.6rem;letter-spacing:.08em;color:var(--muted);
+}
+.footer-bottom .hl{color:var(--crimson-hot);}
+.footer-bottom .gl{color:var(--gold);}
+
+/* ──── SCROLL REVEAL ──── */
+.rev{opacity:0;transform:translateY(40px);transition:opacity .75s ease,transform .75s ease;}
+.rev.vis{opacity:1;transform:none;}
+.rev-l{opacity:0;transform:translateX(-45px);transition:opacity .75s ease,transform .75s ease;}
+.rev-l.vis{opacity:1;transform:none;}
+.rev-r{opacity:0;transform:translateX(45px);transition:opacity .75s ease,transform .75s ease;}
+.rev-r.vis{opacity:1;transform:none;}
+
+/* ──── PARALLAX DECORATIONS ──── */
+.deco{
+  position:absolute;pointer-events:none;z-index:0;
+  border-radius:50%;filter:blur(80px);
+}
+.deco-a{
+  width:500px;height:500px;
+  background:rgba(192,57,43,.05);
+  top:-100px;right:-100px;
+}
+.deco-b{
+  width:400px;height:400px;
+  background:rgba(240,180,41,.04);
+  bottom:-80px;left:-80px;
+}
+
+/* ──── RESPONSIVE ──── */
+@media(max-width:1024px){
+  .bio-wrap{grid-template-columns:1fr;gap:4rem;}
+  .music-grid{grid-template-columns:1fr;}
+  .player-card{position:static;}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:3rem;}
+  .f-brand{grid-column:span 2;}
+  .tour-item{grid-template-columns:90px 1fr auto;}
+  .t-flag{display:none;}
+}
+@media(max-width:768px){
+  nav{padding:1rem 1.5rem;}
+  nav.s{padding:.9rem 1.5rem;}
+  .nav-links,.nav-play{display:none;}
+  .ham{display:flex;}
+  #bio,#music,#discography,#gallery,#merch,#tour{padding:6rem 1.5rem;}
+  footer{padding:5rem 1.5rem 2.5rem;}
+  .gal-grid{grid-template-columns:repeat(2,1fr);}
+  .gal-item.wide,.gal-item.tall{grid-column:span 1;grid-row:span 1;aspect-ratio:1;}
+  .footer-grid{grid-template-columns:1fr;}
+  .f-brand{grid-column:span 1;}
+  .tour-item{grid-template-columns:1fr;gap:.4rem;padding:1.2rem 1.5rem;}
+  .hs1,.hs2,.hs3{display:none;}
+  .bio-stats-row{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:480px){
+  .hero-name{font-size:5rem;}
+  .disco-grid{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="load-logo">REMA</div>
+  <div class="load-track"><div class="load-fill"></div></div>
+  <div class="load-txt">Loading the rave...</div>
+</div>
+
+<!-- CURSOR -->
+<div id="cur"></div>
+<div id="cur-ring"></div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <div class="lb-inner">
+    <button class="lb-close" onclick="closeLB()">✕</button>
+    <div id="lb-art" class="lb-art">REMA</div>
+    <p id="lb-cap" class="lb-cap"></p>
+  </div>
+</div>
+
+<!-- MOBILE MENU -->
+<div class="mob-menu" id="mobMenu">
+  <button class="mob-x" onclick="toggleMob()">✕</button>
+  <a href="#hero" onclick="toggleMob()">Home</a>
+  <a href="#bio" onclick="toggleMob()">Bio</a>
+  <a href="#music" onclick="toggleMob()">Music</a>
+  <a href="#gallery" onclick="toggleMob()">Gallery</a>
+  <a href="#merch" onclick="toggleMob()">Merch</a>
+  <a href="#tour" onclick="toggleMob()">Tour</a>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo">Rema<em>World</em></a>
+  <ul class="nav-links">
+    <li><a href="#bio">Bio</a></li>
+    <li><a href="#music">Music</a></li>
+    <li><a href="#discography">Discography</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#merch">Merch</a></li>
+    <li><a href="#tour">Tour</a></li>
+  </ul>
+  <button class="nav-play" onclick="document.getElementById('music').scrollIntoView({behavior:'smooth'});setTimeout(()=>playTrack(0),500)">▶ Play Now</button>
+  <button class="ham" onclick="toggleMob()"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <canvas id="particles"></canvas>
+
+  <div class="hero-stat hs1">
+    <div class="hero-stat-val">1B+</div>
+    <div class="hero-stat-lbl">YouTube Views</div>
+  </div>
+  <div class="hero-stat hs2">
+    <div class="hero-stat-val">58wks</div>
+    <div class="hero-stat-lbl">Billboard #1</div>
+  </div>
+  <div class="hero-stat hs3">
+    <div class="hero-stat-val">67th</div>
+    <div class="hero-stat-lbl">Grammy Nominated</div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-pill">✦ Afrorave · Benin City to the World ✦</div>
+    <h1 class="hero-name">
+      <span class="line1">HEIS</span>
+      <span class="line2">REMA</span>
+    </h1>
+    <p class="hero-sub">The sound of the new wave — born Divine Ikubor · May 1, 2000</p>
+    <div class="hero-cta">
+      <button class="btn-fire" onclick="document.getElementById('music').scrollIntoView({behavior:'smooth'});setTimeout(()=>playTrack(0),500)">
+        ▶ &nbsp;Stream Now
+      </button>
+      <a href="#bio" class="btn-ghost">Explore Story →</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-inner" id="ticker"></div>
+</div>
+
+<!-- ══ BIO ══ -->
+<section id="bio">
+  <div class="deco deco-a"></div>
+  <div class="deco deco-b"></div>
+  <div class="bio-wrap inner">
+    <div class="bio-left rev-l">
+      <div class="bio-frame">
+        <div class="bio-red-accent"></div>
+        <div class="bio-frame-inner">
+          <div class="bio-big-r">R</div>
+          <div class="bio-frame-label">Divine Ikubor · Benin City</div>
+        </div>
+      </div>
+      <div class="bio-stats-row">
+        <div class="bio-stat">
+          <div class="bio-stat-n" data-count="1">1B+</div>
+          <div class="bio-stat-l">YouTube Views – Calm Down</div>
+        </div>
+        <div class="bio-stat">
+          <div class="bio-stat-n">58</div>
+          <div class="bio-stat-l">Weeks Atop Billboard Afrobeats</div>
+        </div>
+        <div class="bio-stat">
+          <div class="bio-stat-n">67th</div>
+          <div class="bio-stat-l">Grammy Nomination (HEIS)</div>
+        </div>
+        <div class="bio-stat">
+          <div class="bio-stat-n">#3</div>
+          <div class="bio-stat-l">Billboard Hot 100</div>
+        </div>
+      </div>
+    </div>
+    <div class="bio-right rev-r">
+      <p class="sec-label">The Origin Story</p>
+      <h2 class="sec-title">FROM <span class="gold">BENIN</span><br>TO THE <span class="red">WORLD.</span></h2>
+      <p class="bio-p">
+        <strong>Divine Joshua Ikubor</strong> was born May 1, 2000, in Benin City, Edo State — a city pulsing with ancient Benin Kingdom legacy. Raised in a Christian household, Rema found his calling in church music before viral Instagram freestyles shook Nigeria's music industry to its core.
+      </p>
+      <p class="bio-p">
+        In 2018, a freestyle caught the ear of D'Prince, leading to a deal with <strong>Jonzing World</strong>, a subsidiary of Don Jazzy's legendary <strong>Mavin Records</strong>. "Dumebi" erupted globally in 2019 — landing on <em>Barack Obama's summer playlist</em> and announcing Rema as Afrobeats' brightest young star.
+      </p>
+      <p class="bio-p">
+        His 2022 album <strong>Rave & Roses</strong> introduced the world to <em>Afrorave</em> — a fearless collision of Afrobeats, trap, house, and dancehall. "Calm Down" ft. Selena Gomez peaked at <strong>#3 on the Billboard Hot 100</strong>. His 2024 follow-up <strong>HEIS</strong> (Greek for "number one") earned a Grammy nomination and a Coachella debut.
+      </p>
+      <div class="tags">
+        <span class="tag">Afrorave</span>
+        <span class="tag">Grammy Nominated</span>
+        <span class="tag">Mavin Records</span>
+        <span class="tag">Billboard Hot 100</span>
+        <span class="tag">Afrobeats</span>
+        <span class="tag">Coachella 2025</span>
+        <span class="tag">Obama Playlist</span>
+        <span class="tag">HEIS</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<div class="quote-band rev">
+  <div class="quote-bg-text">REMA</div>
+  <p class="quote-text">"I want nothing but your energy —<br><span>the whole world is the stage.</span>"</p>
+  <p class="quote-attr">— Rema · HEIS Listening Party, New York City</p>
+</div>
+
+<!-- ══ MUSIC ══ -->
+<section id="music">
+  <div class="music-inner">
+    <div class="music-head">
+      <div>
+        <p class="sec-label rev">Top Tracks</p>
+        <h2 class="sec-title rev">THE <span class="gold">PLAYLIST</span></h2>
+      </div>
+      <div class="wave rev" id="waveViz">
+        <div class="wave-b" style="height:8px"></div>
+        <div class="wave-b" style="height:20px"></div>
+        <div class="wave-b" style="height:6px"></div>
+        <div class="wave-b" style="height:16px"></div>
+        <div class="wave-b" style="height:12px"></div>
+        <div class="wave-b" style="height:24px"></div>
+        <div class="wave-b" style="height:5px"></div>
+        <div class="wave-b" style="height:18px"></div>
+        <div class="wave-b" style="height:10px"></div>
+        <div class="wave-b" style="height:22px"></div>
+        <div class="wave-b" style="height:8px"></div>
+        <div class="wave-b" style="height:14px"></div>
+      </div>
+    </div>
+    <div class="music-grid">
+      <div class="tracklist rev" id="tracklist"></div>
+      <div class="rev" style="transition-delay:.15s">
+        <div class="player-card">
+          <div class="player-art">
+            <div class="vinyl" id="vinyl">
+              <div class="vinyl-label"><span id="vinyltxt">R&R</span></div>
+            </div>
+            <span class="art-text" id="artTxt">HEIS</span>
+          </div>
+          <div class="player-body">
+            <div class="player-track">
+              <div class="player-title" id="pTitle">Calm Down</div>
+              <div class="player-sub" id="pSub">Rave & Roses · 2022</div>
+            </div>
+            <div class="prog-wrap">
+              <div class="prog-bar" id="progBar" onclick="seekTrack(event)">
+                <div class="prog-fill" id="progFill"></div>
+              </div>
+              <div class="prog-times">
+                <span id="pCur">0:00</span>
+                <span id="pTot">3:39</span>
+              </div>
+            </div>
+            <div class="ctrl">
+              <button class="c-btn" onclick="prevT()" title="Prev">&#9664;&#9664;</button>
+              <button class="c-btn c-play" id="playBtn" onclick="togglePlay()">&#9654;</button>
+              <button class="c-btn" onclick="nextT()" title="Next">&#9654;&#9654;</button>
+            </div>
+            <div class="player-note">
+              ★ Visual demo player — stream the full catalog on Spotify, Apple Music & YouTube.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DISCOGRAPHY ══ -->
+<section id="discography">
+  <div class="disco-header rev">
+    <p class="sec-label">Full Releases</p>
+    <h2 class="sec-title">DISCO<span class="gold">GRAPHY</span></h2>
+  </div>
+  <div class="disco-grid" id="discoGrid"></div>
+</section>
+
+<!-- ══ GALLERY ══ -->
+<section id="gallery">
+  <div class="gallery-inner">
+    <div class="gal-head rev">
+      <p class="sec-label">Visuals</p>
+      <h2 class="sec-title">THE <span class="gold">GALLERY</span></h2>
+    </div>
+    <div class="gal-filters">
+      <button class="gal-btn on" onclick="filterGal('all',this)">All</button>
+      <button class="gal-btn" onclick="filterGal('live',this)">Live</button>
+      <button class="gal-btn" onclick="filterGal('mv',this)">Music Videos</button>
+      <button class="gal-btn" onclick="filterGal('bts',this)">Behind The Scenes</button>
+      <button class="gal-btn" onclick="filterGal('edit',this)">Editorial</button>
+    </div>
+    <div class="gal-grid rev" id="galGrid"></div>
+  </div>
+</section>
+
+<!-- ══ MERCH ══ -->
+<section id="merch">
+  <div class="merch-head rev">
+    <p class="sec-label">Official Store</p>
+    <h2 class="sec-title">MERCH <span class="gold">DROP</span></h2>
+  </div>
+  <div class="merch-grid" id="merchGrid"></div>
+  <div style="text-align:center;margin-top:3rem" class="rev">
+    <a href="https://shopus.heisrema.com" target="_blank" class="btn-fire" style="display:inline-flex">View Full Store →</a>
+  </div>
+</section>
+
+<!-- ══ TOUR ══ -->
+<section id="tour">
+  <div class="tour-inner">
+    <div class="tour-head rev">
+      <p class="sec-label">HEIS World Tour 2025</p>
+      <h2 class="sec-title">LIVE <span class="gold">DATES</span></h2>
+    </div>
+    <div class="tour-list rev" id="tourList"></div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="f-brand">
+        <div class="f-logo">Rema<em>World</em></div>
+        <p class="f-tag">The official fan & music experience site for Afrorave superstar Rema. Benin City to the entire world — the sound of the new wave.</p>
+        <div class="f-socials">
+          <a href="https://instagram.com/heisrema" target="_blank" class="f-soc">📸 Instagram</a>
+          <a href="https://twitter.com/heisrema" target="_blank" class="f-soc">𝕏 Twitter</a>
+          <a href="https://youtube.com/@Rema" target="_blank" class="f-soc">▶ YouTube</a>
+          <a href="https://open.spotify.com/artist/46pWGuE3dSwvVgnygSxAd" target="_blank" class="f-soc">♫ Spotify</a>
+          <a href="https://music.apple.com/artist/rema/1304716885" target="_blank" class="f-soc">🎵 Apple Music</a>
+        </div>
+      </div>
+      <div class="f-col">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="#bio">About Rema</a></li>
+          <li><a href="#music">Music Player</a></li>
+          <li><a href="#discography">Discography</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#merch">Merch</a></li>
+          <li><a href="#tour">Tour Dates</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <h4>Links</h4>
+        <ul>
+          <li><a href="https://heisrema.com" target="_blank">Official Website</a></li>
+          <li><a href="https://shopus.heisrema.com" target="_blank">Official Store</a></li>
+          <li><a href="https://open.spotify.com/artist/46pWGuE3dSwvVgnygSxAd" target="_blank">Spotify</a></li>
+          <li><a href="https://www.youtube.com/@Rema" target="_blank">YouTube Channel</a></li>
+          <li><a href="https://mavin.io" target="_blank">Mavin Records</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 RemaWorld · Fan site — not officially affiliated.</p>
+      <p>Made with <span class="hl">♥</span> for the culture · <span class="gl">✦ Benin City to the World</span></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ═══════════════════════════════
+   DATA
+═══════════════════════════════ */
+const TRACKS = [
+  {title:"Calm Down",album:"Rave & Roses",year:"2022",dur:"3:39",art:"R&R",bg:"#2d0f05"},
+  {title:"Baby (Is It a Crime)",album:"Single",year:"2025",dur:"3:20",art:"BIC",bg:"#051a05"},
+  {title:"Benin Boys ft. Shallipopi",album:"HEIS",year:"2024",dur:"2:58",art:"HEI",bg:"#0a051a"},
+  {title:"Dumebi",album:"Rema (EP)",year:"2019",dur:"2:55",art:"DUM",bg:"#05051a"},
+  {title:"Soundgasm",album:"Rave & Roses",year:"2022",dur:"3:10",art:"R&R",bg:"#2d0f05"},
+  {title:"OZEBA",album:"HEIS",year:"2024",dur:"3:22",art:"HEI",bg:"#0a051a"},
+  {title:"FUN",album:"HEIS",year:"2024",dur:"2:48",art:"HEI",bg:"#0a051a"},
+  {title:"Iron Man",album:"Rema (EP)",year:"2019",dur:"2:30",art:"EP",bg:"#05051a"},
+  {title:"Charm",album:"Single",year:"2023",dur:"3:05",art:"CHM",bg:"#051a1a"},
+  {title:"KELEBU",album:"HEIS",year:"2024",dur:"3:15",art:"HEI",bg:"#0a051a"},
+  {title:"Bout U",album:"Single",year:"2025",dur:"3:02",art:"B·U",bg:"#1a1205"},
+  {title:"AZAMAN",album:"HEIS",year:"2024",dur:"2:55",art:"AZA",bg:"#0a051a"},
+];
+
+const DISCO = [
+  {title:"HEIS",year:"2024",type:"album",tracks:"11 tracks",key:"Benin Boys · OZEBA · FUN · KELEBU"},
+  {title:"Rave & Roses",year:"2022",type:"album",tracks:"14 tracks",key:"Calm Down · Soundgasm · Bounce"},
+  {title:"Ravage",year:"2023",type:"ep",tracks:"5 tracks",key:"Charm · FYN · Red Flags"},
+  {title:"Bad Commando",year:"2021",type:"ep",tracks:"6 tracks",key:"Woman · Ginger Me"},
+  {title:"Freestyle EP",year:"2020",type:"ep",tracks:"6 tracks",key:"Beamer (Bad Boys)"},
+  {title:"Rema (EP)",year:"2019",type:"ep",tracks:"5 tracks",key:"Dumebi · Iron Man · Corny"},
+  {title:"Baby (Is It a Crime)",year:"2025",type:"single",tracks:"Single",key:"Samples Sade · latest release"},
+  {title:"Bout U",year:"2025",type:"single",tracks:"Single",key:"2025 release"},
+  {title:"Calm Down (Remix)",year:"2022",type:"single",tracks:"ft. Selena Gomez",key:"Billboard Hot 100 #3"},
+  {title:"Charm",year:"2023",type:"single",tracks:"Single",key:"Global viral hit"},
+];
+
+const GAL = [
+  {lbl:"HEIS World Tour – London O2",cat:"live",sz:"tall",bg:"linear-gradient(135deg,#1a0505,#350808)",t:"O2"},
+  {lbl:"Calm Down Music Video",cat:"mv",sz:"sq",bg:"linear-gradient(135deg,#051a05,#082d08)",t:"CD"},
+  {lbl:"Coachella 2025 Debut",cat:"live",sz:"wide",bg:"linear-gradient(135deg,#1a1805,#2d2a05)",t:"COACHELLA"},
+  {lbl:"BRIT Awards 2024",cat:"live",sz:"sq",bg:"linear-gradient(135deg,#05051a,#08082d)",t:"BRIT"},
+  {lbl:"Baby (Is It a Crime)",cat:"mv",sz:"tall",bg:"linear-gradient(135deg,#1a051a,#2d082d)",t:"BIC"},
+  {lbl:"HEIS Album Shoot – Benin",cat:"edit",sz:"sq",bg:"linear-gradient(135deg,#051a1a,#082d2a)",t:"HEIS"},
+  {lbl:"Madison Square Garden 2025",cat:"live",sz:"wide",bg:"linear-gradient(135deg,#1a0505,#350808)",t:"MSG"},
+  {lbl:"Behind the Scenes – R&R",cat:"bts",sz:"sq",bg:"linear-gradient(135deg,#1a1205,#2d1a05)",t:"B.T.S"},
+  {lbl:"Benin Boys ft. Shallipopi",cat:"mv",sz:"sq",bg:"linear-gradient(135deg,#05081a,#05102d)",t:"BB"},
+  {lbl:"Recording Session Lagos",cat:"bts",sz:"sq",bg:"linear-gradient(135deg,#0d0a00,#1a1500)",t:"STU"},
+  {lbl:"Vogue Africa Editorial",cat:"edit",sz:"tall",bg:"linear-gradient(135deg,#1a0505,#05051a)",t:"VOG"},
+  {lbl:"HEIS Listening Party NYC",cat:"bts",sz:"sq",bg:"linear-gradient(135deg,#0a0505,#1a0505)",t:"NYC"},
+];
+
+const MERCH = [
+  {name:"HEIS Oversized Hoodie",desc:"Premium heavyweight cotton. Embroidered gold HEIS logo.",price:"$85",badge:"LIMITED",icon:"🧥"},
+  {name:"Calm Down Vinyl Record",desc:'12" clear vinyl, exclusive numbered sleeve edition.',price:"$40",badge:"COLLECTOR",icon:"💿"},
+  {name:"RaveWorld Tour Tee",desc:"100% organic cotton. Benin City screen-printed artwork.",price:"$35",badge:null,icon:"👕"},
+  {name:"HEIS Gold Chain",desc:"Custom pendant. 24K gold plated brass.",price:"$65",badge:"SOLD OUT",icon:"⛓️"},
+  {name:"Rave & Roses Poster",desc:'18×24" archival print. Signed. Extremely limited.',price:"$55",badge:"LIMITED",icon:"🖼️"},
+  {name:"Afrorave Snapback",desc:"6-panel structured cap. Embroidered logo.",price:"$45",badge:null,icon:"🧢"},
+];
+
+const TOUR = [
+  {date:"APR 11",day:"Friday",city:"Edmonton, Canada",venue:"Edmonton Expo Centre",flag:"🇨🇦",s:"tix"},
+  {date:"APR 13",day:"Sunday",city:"Indio, California",venue:"Coachella Weekend 1",flag:"🇺🇸",s:"sold",special:"FESTIVAL"},
+  {date:"APR 20",day:"Sunday",city:"Indio, California",venue:"Coachella Weekend 2",flag:"🇺🇸",s:"sold"},
+  {date:"APR 24",day:"Thursday",city:"Mexico City, Mexico",venue:"Cercle Odyssey",flag:"🇲🇽",s:"tix"},
+  {date:"APR 27",day:"Sunday",city:"Houston, TX",venue:"713 Music Hall",flag:"🇺🇸",s:"tix"},
+  {date:"APR 30",day:"Wednesday",city:"Chicago, IL",venue:"Byline Bank Aragon Ballroom",flag:"🇺🇸",s:"tix"},
+  {date:"MAY 3",day:"Saturday",city:"New York City, NY",venue:"Madison Square Garden",flag:"🇺🇸",s:"sold",special:"SOLD OUT"},
+  {date:"MAY 6",day:"Tuesday",city:"Boston, MA",venue:"MGM Music Hall",flag:"🇺🇸",s:"tix"},
+  {date:"MAY 11",day:"Sunday",city:"Toronto, Canada",venue:"Scotiabank Arena",flag:"🇨🇦",s:"tix"},
+  {date:"MAY 18",day:"Sunday",city:"Berlin, Germany",venue:"Tempodrom",flag:"🇩🇪",s:"tix"},
+  {date:"MAY 25",day:"Sunday",city:"London, UK",venue:"The O2 Arena",flag:"🇬🇧",s:"tix"},
+  {date:"JUN 1",day:"Sunday",city:"Paris, France",venue:"Accor Arena",flag:"🇫🇷",s:"tix"},
+  {date:"JUN 8",day:"Sunday",city:"Copenhagen, Denmark",venue:"Royal Arena",flag:"🇩🇰",s:"tix"},
+  {date:"AUG 1",day:"Friday",city:"Malmo, Sweden",venue:"Dream Park Festival",flag:"🇸🇪",s:"tix"},
+];
+
+const TICKER_ITEMS = [
+  "CALM DOWN","HEIS WORLD TOUR 2025","BABY IS IT A CRIME","GRAMMY NOMINATED",
+  "BENIN BOYS","RAVE & ROSES","AFRORAVE PIONEER","MADISON SQUARE GARDEN",
+  "COACHELLA 2025","SELENA GOMEZ","BILLBOARD HOT 100 #3","BOUT U",
+];
+
+/* ═══════════════════════════════
+   CURSOR
+═══════════════════════════════ */
+const cur = document.getElementById('cur');
+const ring = document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cur.style.left=mx+'px';cur.style.top=my+'px';
+});
+(function raf(){
+  rx+=(mx-rx)*.1;ry+=(my-ry)*.1;
+  ring.style.left=rx+'px';ring.style.top=ry+'px';
+  requestAnimationFrame(raf);
+})();
+document.addEventListener('mouseover',e=>{
+  if(e.target.matches('a,button,.track,.disco-card,.merch-card,.gal-item,.tour-item,.bio-stat,.tag'))
+    document.body.classList.add('hovering');
+});
+document.addEventListener('mouseout',e=>{
+  if(e.target.matches('a,button,.track,.disco-card,.merch-card,.gal-item,.tour-item,.bio-stat,.tag'))
+    document.body.classList.remove('hovering');
+});
+
+/* ═══════════════════════════════
+   PARTICLES
+═══════════════════════════════ */
+(function(){
+  const cv=document.getElementById('particles');
+  const ctx=cv.getContext('2d');
+  let W,H,pts=[];
+  function resize(){W=cv.width=window.innerWidth;H=cv.height=cv.offsetHeight;}
+  resize();window.addEventListener('resize',resize);
+  for(let i=0;i<60;i++) pts.push({
+    x:Math.random()*W,y:Math.random()*H,
+    vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,
+    r:Math.random()*1.5+.5,
+    a:Math.random()
+  });
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(p=>{
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0)p.x=W;if(p.x>W)p.x=0;
+      if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(240,180,41,${p.a*.3})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ═══════════════════════════════
+   TICKER
+═══════════════════════════════ */
+(function(){
+  const doubled=[...TICKER_ITEMS,...TICKER_ITEMS];
+  const el=document.getElementById('ticker');
+  el.innerHTML=doubled.map((t,i)=>
+    `<span>${t}</span>${i%1===0?'<span class="dot">✦</span>':''}`
+  ).join('');
+})();
+
+/* ═══════════════════════════════
+   TRACKLIST RENDER
+═══════════════════════════════ */
+function renderTracklist(){
+  document.getElementById('tracklist').innerHTML=TRACKS.map((t,i)=>`
+    <div class="track${i===0?' on':''}" onclick="playTrack(${i})" id="tr${i}">
+      <span class="t-num">${String(i+1).padStart(2,'0')}</span>
+      <div class="t-thumb" style="background:linear-gradient(135deg,${t.bg},#050505)">${t.art}</div>
+      <div class="t-info">
+        <div class="t-name">${t.title}</div>
+        <div class="t-album">${t.album} · ${t.year}</div>
+      </div>
+      <div class="eq"><div class="eq-b"></div><div class="eq-b"></div><div class="eq-b"></div></div>
+      <span class="t-dur">${t.dur}</span>
+    </div>
+  `).join('');
+}
+
+/* ═══════════════════════════════
+   PLAYER
+═══════════════════════════════ */
+let curTrack=0,playing=false,progPct=0,progTimer=null;
+
+function playTrack(i){
+  curTrack=i;
+  const t=TRACKS[i];
+  document.getElementById('pTitle').textContent=t.title;
+  document.getElementById('pSub').textContent=`${t.album} · ${t.year}`;
+  document.getElementById('artTxt').textContent=t.art;
+  document.getElementById('vinyltxt').textContent=t.art;
+  document.getElementById('pTot').textContent=t.dur;
+  document.querySelectorAll('.track').forEach((el,idx)=>el.classList.toggle('on',idx===i));
+  progPct=0;
+  document.getElementById('progFill').style.width='0%';
+  document.getElementById('pCur').textContent='0:00';
+  playing=true;
+  updateBtn();
+  startProg(t.dur);
+  document.getElementById('waveViz').classList.add('active');
+  const el=document.getElementById(`tr${i}`);
+  if(el) el.scrollIntoView({block:'nearest',behavior:'smooth'});
+}
+
+function togglePlay(){
+  playing=!playing;
+  updateBtn();
+  if(playing){
+    startProg(TRACKS[curTrack].dur);
+    document.getElementById('waveViz').classList.add('active');
+  } else {
+    clearInterval(progTimer);
+    document.getElementById('waveViz').classList.remove('active');
+    document.getElementById('vinyl').classList.remove('spin');
+  }
+}
+
+function updateBtn(){
+  const btn=document.getElementById('playBtn');
+  btn.innerHTML=playing?'&#9646;&#9646;':'&#9654;';
+  if(playing){
+    document.getElementById('vinyl').classList.add('spin');
+    btn.classList.add('pulsing');
+  } else {
+    document.getElementById('vinyl').classList.remove('spin');
+    btn.classList.remove('pulsing');
+  }
+}
+
+function startProg(dur){
+  clearInterval(progTimer);
+  const[m,s]=dur.split(':').map(Number);
+  const tot=m*60+s;
+  let el=progPct*tot/100;
+  progTimer=setInterval(()=>{
+    el+=.5;
+    if(el>=tot){el=0;nextT();return;}
+    progPct=(el/tot)*100;
+    document.getElementById('progFill').style.width=progPct+'%';
+    const mm=Math.floor(el/60),ss=Math.floor(el%60);
+    document.getElementById('pCur').textContent=`${mm}:${ss.toString().padStart(2,'0')}`;
+  },500);
+}
+
+function seekTrack(e){
+  const bar=document.getElementById('progBar');
+  const rect=bar.getBoundingClientRect();
+  progPct=((e.clientX-rect.left)/rect.width)*100;
+  document.getElementById('progFill').style.width=progPct+'%';
+  if(playing){clearInterval(progTimer);startProg(TRACKS[curTrack].dur);}
+}
+
+function prevT(){playTrack((curTrack-1+TRACKS.length)%TRACKS.length);}
+function nextT(){playTrack((curTrack+1)%TRACKS.length);}
+
+/* ═══════════════════════════════
+   DISCOGRAPHY
+═══════════════════════════════ */
+function renderDisco(){
+  const map={album:'b-alb',ep:'b-ep',single:'b-sng'};
+  const lbl={album:'Album',ep:'EP',single:'Single'};
+  const cols={album:'#1a0303',ep:'#1a1a03',single:'#031a03'};
+  document.getElementById('discoGrid').innerHTML=DISCO.map((d,i)=>`
+    <div class="disco-card rev" style="transition-delay:${i*.05}s">
+      <div class="disco-art" style="background:linear-gradient(135deg,${cols[d.type]},#050505)">
+        <div class="disco-art-txt">${d.title.split(' ')[0].slice(0,4).toUpperCase()}</div>
+        <div class="disco-hover">
+          <div class="disco-hover-tracks">${d.key.split('·').map(k=>`· ${k.trim()}`).join('<br>')}</div>
+        </div>
+      </div>
+      <div class="disco-title">${d.title}</div>
+      <div class="disco-meta">${d.year} · ${d.tracks}</div>
+      <span class="disco-badge ${map[d.type]}">${lbl[d.type]}</span>
+    </div>
+  `).join('');
+}
+
+/* ═══════════════════════════════
+   GALLERY
+═══════════════════════════════ */
+let galFilter='all';
+function renderGal(){
+  const items=galFilter==='all'?GAL:GAL.filter(g=>g.cat===galFilter);
+  document.getElementById('galGrid').innerHTML=items.map((g,i)=>`
+    <div class="gal-item ${g.sz}" style="transition-delay:${i*.04}s" onclick="openLB('${g.lbl}','${g.t}','${g.bg}')">
+      <div class="gal-placeholder" style="background:${g.bg}">${g.t}</div>
+      <div class="gal-overlay"><span class="gal-cap">${g.lbl}</span></div>
+    </div>
+  `).join('');
+}
+function filterGal(cat,btn){
+  galFilter=cat;
+  document.querySelectorAll('.gal-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  renderGal();
+}
+function openLB(cap,txt,bg){
+  const lb=document.getElementById('lightbox');
+  document.getElementById('lb-art').style.background=bg;
+  document.getElementById('lb-art').textContent=txt;
+  document.getElementById('lb-cap').textContent=cap;
+  lb.classList.add('on');
+}
+function closeLB(){document.getElementById('lightbox').classList.remove('on');}
+document.getElementById('lightbox').addEventListener('click',e=>{if(e.target===e.currentTarget)closeLB();});
+
+/* ═══════════════════════════════
+   MERCH
+═══════════════════════════════ */
+function renderMerch(){
+  document.getElementById('merchGrid').innerHTML=MERCH.map((m,i)=>`
+    <div class="merch-card rev" style="transition-delay:${i*.07}s">
+      ${m.badge?`<div class="m-badge">${m.badge}</div>`:''}
+      <div class="m-img">
+        <div class="m-icon">${m.icon}</div>
+        <div class="m-type">Rema Official</div>
+      </div>
+      <div class="m-info">
+        <div class="m-name">${m.name}</div>
+        <div class="m-desc">${m.desc}</div>
+        <div class="m-foot">
+          <div class="m-price">${m.price}</div>
+          <a href="https://shopus.heisrema.com" target="_blank" class="m-btn" 
+            ${m.badge==='SOLD OUT'?'style="opacity:.35;pointer-events:none;"':''}>
+            ${m.badge==='SOLD OUT'?'Sold Out':'Shop →'}
+          </a>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ═══════════════════════════════
+   TOUR
+═══════════════════════════════ */
+function renderTour(){
+  document.getElementById('tourList').innerHTML=TOUR.map(d=>`
+    <div class="tour-item">
+      <div>
+        <div class="t-date">${d.date}</div>
+        <div class="t-day">${d.day}</div>
+      </div>
+      <div>
+        <div class="t-city">${d.city}${d.special?`<span class="t-special">${d.special}</span>`:''}</div>
+        <div class="t-venue">${d.venue}</div>
+      </div>
+      <span class="t-flag">${d.flag}</span>
+      <a href="https://heisrema.com/tour" target="_blank" 
+         class="t-tix${d.s==='sold'?' sold':''}">${d.s==='sold'?'Sold Out':'Get Tickets →'}</a>
+    </div>
+  `).join('');
+}
+
+/* ═══════════════════════════════
+   NAV SCROLL
+═══════════════════════════════ */
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('s',scrollY>60);
+});
+
+/* ═══════════════════════════════
+   MOBILE MENU
+═══════════════════════════════ */
+function toggleMob(){document.getElementById('mobMenu').classList.toggle('on');}
+
+/* ═══════════════════════════════
+   HERO STATS ANIMATION
+═══════════════════════════════ */
+setTimeout(()=>{
+  document.querySelectorAll('.hero-stat').forEach((el,i)=>{
+    setTimeout(()=>el.classList.add('on'),1500+i*300);
+  });
+},0);
+
+/* ═══════════════════════════════
+   SCROLL REVEAL
+═══════════════════════════════ */
+const ro=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});
+},{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+
+function observe(){
+  document.querySelectorAll('.rev,.rev-l,.rev-r').forEach(el=>ro.observe(el));
+}
+
+/* ═══════════════════════════════
+   LOADER
+═══════════════════════════════ */
+let p=0;
+const ldr=document.getElementById('loader');
+const li=setInterval(()=>{
+  p+=Math.random()*30;
+  if(p>=100){
+    clearInterval(li);
+    setTimeout(()=>{
+      ldr.classList.add('out');
+      ldr.addEventListener('animationend',()=>{ldr.style.display='none';},{ once:true });
+      observe();
+    },300);
+  }
+},150);
+
+/* ═══════════════════════════════
+   INIT
+═══════════════════════════════ */
+renderTracklist();
+renderDisco();
+renderGal();
+renderMerch();
+renderTour();
+setTimeout(observe,200);
+</script>
+</body>
+</html>
